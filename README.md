@@ -65,7 +65,7 @@ The rejection was challenged based on the following points:
 
 - **Non-Interference**: The extension does not interact with active gambling sessions; it only passively collects completed betting data.
 - **Privacy and Responsibility**: The extension is designed to promote responsible gambling behavior by giving users access to detailed analytics and insights.
-- **Policy Inconsistency**: Several extensions that directly facilitate gambling were approved, such as **DraftKings Lineup Filler**, **RotoGrinders DraftKings Tools**, and **FanDuel Shark Finder**.
+- **Policy Inconsistency**: Several extensions that directly facilitate gambling were approved*.
   
 Despite these arguments, the Chrome Web Store maintained its decision, suggesting that other non-compliant extensions should be reported separately.
 
