@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Stake Bet Analyzer",
+  "version": "1.02",
+  "description": "Analyzes and visualizes bet results from Stake.com and Stake.us",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "/popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://stake.com/*", "https://stake.us/*"],
+      "js": ["inject.js"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["injected.js"],
+    "matches": ["https://stake.com/*", "https://stake.us/*"]
+  }]
+}

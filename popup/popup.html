@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stake Bet Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+:root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #252525;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent: #4CAF50;
+            --accent-hover: #45a049;
+            --hot: #4CAF50;
+            --cold: #f44336;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            width: 400px;
+            box-sizing: border-box;
+        }
+        .tab {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .tablinks {
+            flex: 1;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        .tablinks:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .tablinks.active {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+        .tabcontent {
+            display: none;
+            animation: fadeEffect 0.5s;
+        }
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        .stats-container {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .stats-label {
+            color: var(--text-secondary);
+        }
+        .stats-value {
+            font-weight: bold;
+        }
+        .hot {
+            color: var(--hot);
+        }
+        .cold {
+            color: var(--cold);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            overflow-y:visible;
+            font-size: 12px; 
+        }
+        th, td {
+            text-align: left;
+            padding: 8px 12px; 
+            border-bottom: 1px solid var(--bg-primary);
+            white-space: nowrap; 
+        }
+        th {
+            font-size: 10px;
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            position: relative; 
+        }
+        .tooltip {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 12px;
+            font-size: 10px;
+            cursor: help;
+            margin-left: 2px;
+            position: relative;
+            top: -1px;
+        }
+        .tooltip:hover::after {
+            content: attr(title);
+            position: absolute;
+            background: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 10px;
+            white-space: normal; /* Allow wrapping in tooltip */
+            width: 150px; /* Set a fixed width for the tooltip */
+            z-index: 1;
+            bottom: 125%; /* Position above the text */
+            left: -60px;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #multipliersTable th:nth-child(1) { width: 20%; }
+        #multipliersTable th:nth-child(2) { width: 20%; }
+        #multipliersTable th:nth-child(3) { width: 30%; }
+        #multipliersTable th:nth-child(4) { width: 30%; }
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .number-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .number-cell:hover {
+            transform: scale(1.1);
+        }
+        #resetButton {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        #resetButton:hover {
+            background-color: var(--accent-hover);
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        #kenoNumberGrid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 4px;
+    padding: 10px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.number-cell {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.number-cell .number {
+    font-size: 14px;
+}
+.number-cell .occurrences {
+    font-size: 10px;
+    opacity: 0.8;
+}
+.footer a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+        </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tab">
+            <button class="tablinks" data-tab="Plinko">Plinko</button>
+            <button class="tablinks" data-tab="Keno">Keno</button>
+        </div>
+        <div id="Plinko" class="tabcontent">
+            <div id="statsContainer">
+                <h2>Current Seed Statistics</h2>
+                <div class="stats-row">Total Bets: <span id="totalBets">-</span></div>
+                <div class="stats-row">Average Return: <span id="averageReturn">-</span></div>
+                <div class="stats-row">Profit/Loss: <span id="profitLoss">-</span></div>
+                <div class="stats-row">Status: <span id="status">-</span></div>
+            </div>
+            <div id="allMultipliers">
+                <h2>All Multipliers</h2>
+                <table id="multipliersTable">
+                    <thead>
+                        <tr>
+                            <th>Multiplier</th>
+                            <th>Count</th>
+                            <th>Current Interval
+                                <span class="tooltip" title="Number of bets since this multiplier last occurred">?</span>
+                            </th>
+                            <th>Last Interval
+                                <span class="tooltip" title="Number of bets between the last two occurrences of this multiplier">?</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div id="historicalResults">
+                <h2>Recent Bets</h2>
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Multiplier</th>
+                            <th>Amount</th>
+                            <th>Payout</th>
+                            <th>Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <h2>Cumulative Return</h2>
+            <canvas id="returnChart" width="360" height="200"></canvas>
+        </div>
+        <div id="Keno" class="tabcontent">
+            <h2>Keno Statistics</h2>
+            <div class="stats-row">Total Bets: <span id="kenoTotalBets">-</span></div>
+            <h2>Number Occurrences</h2>
+            <div id="kenoNumberGrid" class="number-grid"></div>
+        </div>
+        <div class="footer">
+            <button id="resetButton">Reset Stats</button>
+            <p>Data refreshed every 5 seconds</p>
+            <p><a href="https://stakeanalyzer.live" target="_blank" rel="noopener noreferrer">Visit StakeAnalyzer.live</a></p>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
