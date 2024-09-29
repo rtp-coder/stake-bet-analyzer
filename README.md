@@ -18,6 +18,7 @@ Due to Chrome Web Store policies regarding gambling-related extensions, **Stake 
 4. Enable **Developer mode** in the top-right corner of the extensions page.
 5. Click **Load unpacked** and select the unzipped extension folder.
 6. The extension should now be visible in your Chrome browser.
+7. Be sure to refresh stake in browser after adding extension to initiate tracking.
 
 For a more detailed guide, see the [Manual Installation Guide](#manual-installation-guide) below.
 
